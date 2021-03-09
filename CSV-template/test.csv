@@ -1,0 +1,8 @@
+name,surname,fatherName,email,position,age,gender,keepUpdated
+John,Does,James,john@gmail.com,student,25,male,TRUE
+Smith,Laker,Dawkins,smith@gmail.com,professional,55,male,TRUE
+Mark,Levy,Mark's Father,yankin@gmail.com,graduate,66,male,
+McGinnis,220 hobo Av.,Phila,garada@gmail.com,student,55,male,yes
+McGinnis,221 hobo Av.,Phila,garada@gmail.com,student,56,male,no
+McGinnis,222 hobo Av.,Phila,garada@gmail.com,student,57,male,yes
+McGinnis,223 hobo Av.,Phila,garada@gmail.com,student,58,male,no
