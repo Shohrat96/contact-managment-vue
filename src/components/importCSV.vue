@@ -69,7 +69,8 @@ export default {
       parse_header: [],
       parse_csv: [],
       sortOrders:{},
-      sortKey: ''
+      sortKey: '',
+      csv:null
         };
     },
       filters: {
@@ -100,7 +101,7 @@ export default {
       //   result.push(obj)
       // })
       // return result // JavaScript object
-           var vm = this
+      var vm = this
       var lines = csv.split("\n")
       var result = []
       var headers = lines[0].split(",")
@@ -110,31 +111,25 @@ export default {
       })
       
       lines.map(function(line, indexLine){
-        if (indexLine < 1 || indexLine===lines.length-1) return // Jump header line
+        if (indexLine < 1) return // Jump header line
         
         var obj = {}
         var currentline = line.split(",")
         
         headers.map(function(header, indexHeader){
-          let objKey=header;
-          let val=currentline[indexHeader];
-          if (val.indexOf('"')!==-1){
-            console.log("FOUNDDDd: ",val);
-            val=val.substring(1,(val.length-1))
+          if (indexHeader===headers.length-1){
+            console.log('last header: ',header);
+            header=header.substring(0, (header.length-1));
           }
-          if (objKey.indexOf('"')!==-1){
-            //console.log("FOUNDDDd: ",val);
-            val=val.substring(1,(val.length-1))
-          }
-          console.log("header: ",header);
-          console.log("obj[header]: ",obj[header]);
-          obj[header] = val
+          obj[header] = currentline[indexHeader];
+
         })
-        console.log("obj: ",obj)
+        console.log('obj: ',obj)
         result.push(obj)
       })
       
-      //result.pop() // remove the last item because undefined values
+      result.pop() // remove the last item because undefined values
+      
       return result // JavaScript object
 
     },
