@@ -3,7 +3,7 @@
     <h1 class="title">Contacts Page</h1>
     <div class="content">
 
-
+<!-- 
     <vue-csv-import
         v-model="csv"
         :fields="{name: {required: false, label: 'Name'}, age: {required: true, label: 'Age'}}"
@@ -12,7 +12,7 @@
         <vue-csv-errors></vue-csv-errors>
         <vue-csv-input></vue-csv-input>
         <vue-csv-map></vue-csv-map>
-    </vue-csv-import>
+    </vue-csv-import> -->
 
       <csv-import @handleUpload="handleUpload" ></csv-import>
       <modal-info v-if="infoModal.show" :infoModal="infoModal"></modal-info>
@@ -41,7 +41,6 @@ import SingleContact from '../components/SingleContact';
 import ModalInfo from '../components/ModalInfo';
 import ImportCsv from '../components/importCSV';
 import HttpRequests from '../mixins/HttpRequests';
-import { VueCsvImport } from 'vue-csv-import';
 
 export default {
   name: 'ContactsPage',
@@ -49,7 +48,6 @@ export default {
     'single-contact':SingleContact,
     'modal-info':ModalInfo,
     'csv-import' :ImportCsv,
-    'vue-csv-import':VueCsvImport
   },
   mixins:[HttpRequests],
   data(){
@@ -59,7 +57,6 @@ export default {
         show:false,
         contact:{}
       },
-      csv:null
     }
   },
   props: {
