@@ -13,6 +13,10 @@
       <label>Father name</label>
       <input type="text" v-model="contact.fatherName"/>
     </div>
+    <div class="email">
+      <label>E-mail</label>
+      <input type="email" v-model="contact.email"/>
+    </div>
     <div class="age">
       <label>Age</label>
       <input type="number" v-model="contact.age"/>
@@ -31,10 +35,7 @@ export default {
   data() {
     return {
       contact:{
-        name: this.$props.data.name || "",
-        surname:this.$props.data.surname || "",
-        fatherName:this.$props.data.fatherName || "",
-        age:this.$props.data.age || "",
+
       }
     };
   },
@@ -45,7 +46,9 @@ export default {
       type:Object
     }
   },
-
+  created(){
+    this.contact={...this.$props.data}
+  },
   methods: {
     handleSubmit(e){
       e.preventDefault();
@@ -60,8 +63,8 @@ export default {
       }
       //add new item using mixin method
       else {
-        this.postRequest(obj)
-        .then(()=>{
+        let result=this.postRequest(obj)
+        result.postRqst.then(()=>{
           Object.keys(this.contact).forEach(key=>this.contact[key]="");
         })
       }

@@ -1,2 +1,5 @@
-name,surname,fatherName,age
-John,Does,James,25
+name,surname,fatherName,email,age
+Samad,Aliyev,Fikrat,samad.aliyev@mail.ru,25
+Tamerlan,Terlan,Firuz,tamerlan.terlan@mail.ru,55
+Eldar,Aliyev,Tural,eldar.aliyev@mail.ru,45
+Tarana,Valiyeva,Ahmad ,tarana.valiyeva@mail.ru,32

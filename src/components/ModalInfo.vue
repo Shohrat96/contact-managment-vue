@@ -18,12 +18,16 @@
           <span>{{modalObj.contact.fatherName}}</span>
         </div>
         <div class="modal-field">
+          <span class="field-title">Email</span>
+          <span>{{modalObj.contact.email}}</span>
+        </div>
+        <div class="modal-field">
           <span class="field-title">Age</span>
           <span>{{modalObj.contact.age}}</span>
         </div>
         <div class="modal-field">
           <span class="field-title">Created</span>
-          <span>{{modalObj.contact.created}}</span>
+          <span>{{modalObj.contact.create}}</span>
         </div>
         <div v-if="modalObj.contact.updated" class="modal-field modal-field-last">
           <span class="field-title">Updated</span>

@@ -2,18 +2,6 @@
   <div class="container">
     <h1 class="title">Contacts Page</h1>
     <div class="content">
-
-<!-- 
-    <vue-csv-import
-        v-model="csv"
-        :fields="{name: {required: false, label: 'Name'}, age: {required: true, label: 'Age'}}"
-    >
-        <vue-csv-toggle-headers></vue-csv-toggle-headers>
-        <vue-csv-errors></vue-csv-errors>
-        <vue-csv-input></vue-csv-input>
-        <vue-csv-map></vue-csv-map>
-    </vue-csv-import> -->
-
       <csv-import @handleUpload="handleUpload" ></csv-import>
       <modal-info v-if="infoModal.show" :infoModal="infoModal"></modal-info>
       <table>
@@ -63,9 +51,6 @@ export default {
 
   },
   methods:{
-    test(){
-      console.log("value: ",this.csv)
-    },
     deleteContact(id){
       this.contacts=this.contacts.filter(contact=>contact.id!==id)
     },
@@ -74,12 +59,17 @@ export default {
       this.infoModal.show=true;
     },
     handleUpload(contactsArr){
-      console.log("arr: ",contactsArr[0]);
-      this.postRequest(contactsArr[0])
-      // contactsArr.forEach(contact => {
-      //   let result=this.postRequest(contact);
-      //   result.then(()=>this.contacts.unshift(contact));
-      // });
+      // this.postRequest(contactsArr[0])
+      contactsArr.forEach(contact => {
+        let result=this.postRequest(contact);
+        result.postRqst.then((res)=>{
+          const newContact={
+            ...result.newContact,
+            id:res.body.name
+          }
+          this.contacts.unshift(newContact);
+        });
+      });
     }
   },
   created(){

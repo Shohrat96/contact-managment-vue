@@ -3,11 +3,18 @@ const httpRequests={
         postRequest(obj){
             let date=new Date();
             let utcDate=date.toUTCString();
+            const newContact={
+                ...obj,
+                create:utcDate
+            }
             let postRqst=this.$http.post('https://contact-managment-vue-default-rtdb.firebaseio.com/contacts.json',
-            {...obj, created:utcDate});
+            newContact);
 
             //return promise
-            return postRqst
+            return {
+                postRqst,
+                newContact
+            }
         },
         patchRequest(id, update){
             let date=new Date();

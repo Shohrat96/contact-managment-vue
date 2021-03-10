@@ -33,9 +33,6 @@ export default {
       type:Object
     }
   },
-  components:{
-    // 'modal-info':ModalInfo
-  },
   methods:{
 
     deleteHandler(){
