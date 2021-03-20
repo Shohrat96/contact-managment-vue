@@ -1,7 +1,8 @@
 <template>
   <div class="container">
     <h1>{{editMode?'Edit Contact':'Add New Contact'}}</h1>
-    <custom-form :data="contact"></custom-form>
+    <custom-form v-if="editMode" :data="contact"></custom-form>
+    <custom-form v-else></custom-form>
   </div>
 </template>
 
@@ -20,9 +21,6 @@ export default {
   },
   components:{
       'custom-form':Form
-  },
-  props: {
-    
   },
   created(){
     if (this.$route.params.singleContact){

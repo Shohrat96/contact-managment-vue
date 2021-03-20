@@ -9,6 +9,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {BootstrapVue} from 'bootstrap-vue' 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import VueToast from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
 
 Vue.use(BootstrapVue)
 library.add( faEdit, faTrashAlt, faInfoCircle)
@@ -18,6 +20,9 @@ Vue.config.productionTip = false
 
 Vue.use(VueRouter)
 Vue.use(VueResource)
+Vue.use(VueToast, {
+  position: 'top'
+})
 
 const router=new VueRouter({
   routes:routes,

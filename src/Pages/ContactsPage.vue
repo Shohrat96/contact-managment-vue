@@ -72,18 +72,19 @@ export default {
       });
     }
   },
-  created(){
+  mounted(){
     this.getAllContactsRequest()
     .then(data=>data.json())
     .then(dataParsed=>{
       let result=[];
       result=Object.keys(dataParsed).map(key=>{
         dataParsed[key].id=key;
-        return dataParsed[key ]
+        return dataParsed[key]
       })
       this.contacts=result;
+      console.log("result: ",result)
     })
-    
+    console.log("mounted, contacts: ",this.contacts)
   }
 }
 </script>

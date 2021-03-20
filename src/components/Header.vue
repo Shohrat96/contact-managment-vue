@@ -24,28 +24,29 @@ export default {
         text-align: center;
         margin: 0;
     }
-     nav{
+    nav{
         background-color: #444;
         padding: 14px 0;
         margin-bottom: 40px;
     }
-     li{
-
+    li{
          display: inline-block;
          margin: 0 10px;
-     }
-     .router-link-active{
-         background-color: #eee;
-         color: #444;
+
      }
      a{
-         text-decoration: none;
-         padding: 6px 8px;
-         color: #fff;
-         border-radius: 10px;
+        text-decoration: none;
+        color: white;
+        padding: 6px 8px;
+        border-radius: 10px;
      }
-     a :hover{
-         color: black !important;
-         text-decoration: none !important;
+     a:hover{
+        text-decoration: none;
+        color: white;
      }
+     a.router-link-exact-active{
+         color: #444;
+         background-color: white;
+     }
+    
 </style>

@@ -3,23 +3,33 @@
   <form class="form">
     <div class="name">
       <label>Name</label>
-      <input type="text" v-model="contact.name" />
+      <input type="text" v-model="contact.name.value" @blur="onBlur('name', $event)"/>
+      <div class="break"></div>
+      <p class="fieldError" v-if="!contact.name.valid">Provide name correctly!</p>
     </div>
     <div class="surname">
       <label>Surname</label>
-      <input type="text" v-model="contact.surname"/>
+      <input type="text" v-model="contact.surname.value" @blur="onBlur('surname', $event)"/>
+      <div class="break"></div>
+      <p class="fieldError" v-if="!contact.surname.valid">Provide surname correctly!</p>
     </div>
     <div class="fatherName">
       <label>Father name</label>
-      <input type="text" v-model="contact.fatherName"/>
+      <input type="text" v-model="contact.fatherName.value" @blur="onBlur('fatherName', $event)"/>
+      <div class="break"></div>
+      <p class="fieldError" v-if="!contact.fatherName.valid">Provide father name correctly!</p>
     </div>
     <div class="email">
       <label>E-mail</label>
-      <input type="email" v-model="contact.email"/>
+      <input type="email" v-model="contact.email.value" @blur="onBlur('email', $event)"/>
+      <div class="break"></div>
+      <p class="fieldError" v-if="!contact.email.valid">Provide email correctly!</p>
     </div>
     <div class="age">
       <label>Age</label>
-      <input type="number" v-model="contact.age"/>
+      <input type="number" v-model="contact.age.value" @blur="onBlur('age', $event)"/>
+      <div class="break"></div>
+      <p class="fieldError" v-if="!contact.age.valid">Provide age correctly!</p>
     </div>
     <div class="submit"> 
       <input type="submit" @click="handleSubmit"/>
@@ -35,7 +45,26 @@ export default {
   data() {
     return {
       contact:{
-
+        name:{
+          value:"",
+          valid:true
+        },
+        surname:{
+          value:"",
+          valid:true
+        },
+        fatherName:{
+          value:"",
+          valid:true
+        },
+        email:{
+          value:"",
+          valid:true
+        },
+        age:{
+          value:"",
+          valid:true
+        },
       }
     };
   },
@@ -47,26 +76,76 @@ export default {
     }
   },
   created(){
-    this.contact={...this.$props.data}
+    if (this.$props.data){
+      //this.contact={...this.$props.data}
+      console.log("data: ",this.$props.data)
+      Object.keys(this.contact).forEach(key=>{
+        this.contact[key].value=this.$props.data[key]
+      })
+      console.log("data: ",this.contact)
+    }
   },
   methods: {
+    validateNewContact(values){
+      let fieldsInError=[];
+      Object.keys(values).forEach(key=>{
+        if (!values[key].value.trim()){
+          this.contact[key].valid=false;
+          fieldsInError.push(this.contact[key])
+        }
+      })
+      return fieldsInError
+    },
+    validateContactUpdate(){
+      let changedFields=[]
+      Object.keys(this.contact).forEach(key=>{
+        if (this.contact[key].value!==this.$props.data[key]){
+          changedFields.push(key);
+        }
+      })
+      return changedFields;
+    },
+    onBlur(field){
+      if (this.contact[field].value.trim()){
+        this.contact[field].valid=true
+      }
+    },
     handleSubmit(e){
       e.preventDefault();
-      const obj={...this.contact}
+      //const obj={...this.contact}
       
       //check if already existing contact
-      if (Object.keys(this.$props.data).length>1){
-        this.patchRequest(this.$props.data.id, obj)
-        .then(()=>{
-          Object.keys(this.contact).forEach(key=>this.contact[key]="");
-        })
+      if (this.$props.data&&Object.keys(this.$props.data).length>1){
+        const updatedFields=this.validateContactUpdate();
+        if (updatedFields.length){
+          const newContact={};
+          Object.keys(this.contact).forEach(key=>{
+             newContact[key]=this.contact[key].value;
+          })
+          this.patchRequest(this.$props.data.id, newContact)
+          .then(()=>{
+            this.$toast.success("contact changed successfully")
+            this.$router.push("/");
+          })
+        }else {
+          this.$toast.error("no change made")
+        }
+
       }
       //add new item using mixin method
       else {
-        let result=this.postRequest(obj)
-        result.postRqst.then(()=>{
-          Object.keys(this.contact).forEach(key=>this.contact[key]="");
-        })
+        const fieldsInError=this.validateNewContact(this.contact);
+        if (!fieldsInError.length){
+          const newContact={};
+           Object.keys(this.contact).forEach(key=>{
+             newContact[key]=this.contact[key].value;
+          })
+          let result=this.postRequest(newContact)
+          result.postRqst.then(()=>{
+            this.$toast.success("contact added successfully")
+            this.$router.push("/");
+          })
+        }
       }
 
     },
@@ -83,12 +162,14 @@ export default {
 .form div{
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
   align-items: center;
   margin: 15px 0;
 }
 .form>div>label{
   flex: 1;
   text-align: left;
+  font-weight: bold;
 }
 .form>div>input{
   flex: 3;
@@ -111,5 +192,13 @@ form>div.submit{
 }
 .form input[type=submit]:hover {
   background-color: #45a049;
+}
+.fieldError{
+  color: red;
+}
+.break{
+  flex-basis: 100%;
+  height: 0;
+  margin: 0 !important;
 }
 </style>
