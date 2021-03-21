@@ -40,15 +40,16 @@ export default {
   mixins:[HttpRequests],
   data(){
     return {
-      contacts:[],
       infoModal:{
         show:false,
         contact:{}
       },
     }
   },
-  props: {
-
+  computed: {
+    contacts(){
+      return this.$store.getters.contacts
+    }
   },
   methods:{
     deleteContact(id){
@@ -81,10 +82,9 @@ export default {
         dataParsed[key].id=key;
         return dataParsed[key]
       })
+      this.$store.commit('setContacts',result)
       this.contacts=result;
-      console.log("result: ",result)
     })
-    console.log("mounted, contacts: ",this.contacts)
   }
 }
 </script>

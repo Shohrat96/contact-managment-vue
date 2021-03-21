@@ -11,6 +11,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueToast from 'vue-toast-notification';
 import 'vue-toast-notification/dist/theme-sugar.css';
+import store from './store/index'
 
 Vue.use(BootstrapVue)
 library.add( faEdit, faTrashAlt, faInfoCircle)
@@ -32,4 +33,5 @@ const router=new VueRouter({
 new Vue({
   render: h => h(App),
   router:router,
+  store:store
 }).$mount('#app')

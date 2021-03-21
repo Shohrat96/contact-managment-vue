@@ -40,7 +40,7 @@ export default {
       .then((res)=>{
         if (res){
         this.$http.delete(`https://contact-managment-vue-default-rtdb.firebaseio.com/contacts/${this.contact.id}.json`)
-        .then(()=>this.$emit("deleteContact", this.contact.id))
+        .then(()=>this.$store.commit("deleteContact", this.contact.id))
         }
       })
     },
